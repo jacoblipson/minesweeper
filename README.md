@@ -1,10 +1,11 @@
 ## Minesweeper
-#### A ReactJS implementation of the childhood favorite
-#### Jake Lipson, 6/24/2017
+A ReactJS implementation of the childhood favorite  
+Jake Lipson, 6/24/2017  
 
 - [Installation](#installation)
 - [Gameplay](#gameplay)
-- [Implementation Notes](#architecture--process)
+- [Implementation Notes](#implementation-notes)
+- [Potential Improvements](#potential-improvements)
 - [Known Issues](#known-issues)
 
 
