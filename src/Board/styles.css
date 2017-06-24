@@ -30,7 +30,7 @@
   justify-content: center;
   width: 30px;
   height: 30px;
-  background-color: '#666666';
+  background-color: #bbb;
   border: 3px outset gray;
   cursor: pointer;
 }
@@ -44,7 +44,7 @@
   color: blue;
   font-weight: 600;
   border: 3px inset gray;
-  background-color: '#989898';
+  background-color: #989898;
 }
 
 .bomb-cell {
