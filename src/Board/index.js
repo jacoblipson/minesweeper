@@ -1,20 +1,12 @@
 import React, { Component } from 'react';
 
-const difficulties = {
-  'easy': {
-    length: 9,
-    width: 9,
-    mines: 10,
-  }
-}
-
+import Row from './Row';
 
 export default class Board extends Component {
-
   render() {
     return (
       <div className="board">
-        <div>This is the board</div>
+        {this.props.board && this.props.board.map(row => <Row row={row} />)}
       </div>
     );
   }
