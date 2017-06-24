@@ -38,7 +38,7 @@ class App extends Component {
         col[j] = {
           revealed: false,
           marked: false,
-          bomb: false,
+          bomb: null,
           neighbors: 0
         }
       }
@@ -59,7 +59,7 @@ class App extends Component {
         x = Math.floor((Math.random() * width));
         y = Math.floor((Math.random() * height));
       }
-      board[x][y].bomb = true;
+      board[x][y].bomb = 'active';
       addedMines++;
       board = this.updateNeighbors(board, x, y, width, height)
     }

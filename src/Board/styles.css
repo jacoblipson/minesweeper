@@ -1,4 +1,48 @@
+.cells {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: blue;
+  font-weight: 600;
+  background-color: gray;
+  border: 3px outset gray;
+}
+
 .bomb-cell {
-  width: 100px;
-  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: gray;
+  border: 3px outset gray;
+}
+
+.exploded-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: red;
+  border: 3px outset gray;
+}
+
+.cell-img {
+  width: 25px;
+  height: 25px;
 }

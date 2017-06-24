@@ -5,9 +5,11 @@ import './styles.css';
 
 export default class BombCell extends Component {
   render() {
+    let css = this.props.bombState !== 'explosion'
+      ? 'exploded-cell' : 'bomb-cell';
     return (
-      <div className='bomb-cell'>
-        {bomb}
+      <div className={css}>
+        <img src={bomb} className='cell-img' alt="bomb" />
       </div>
     );
   }

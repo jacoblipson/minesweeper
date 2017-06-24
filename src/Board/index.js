@@ -6,7 +6,10 @@ export default class Board extends Component {
   render() {
     return (
       <div className="board">
-        {this.props.board && this.props.board.map(row => <Row row={row} />)}
+        <div className="cells">
+          {this.props.board && this.props.board.map((row, index) =>
+            <Row key={index} row={row} />)}
+        </div>
       </div>
     );
   }
