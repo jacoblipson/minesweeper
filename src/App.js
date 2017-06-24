@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import SettingsPage from './SettingsPage';
 import TitlePage from './TitlePage';
 import Board from './Board';
 
@@ -9,7 +10,17 @@ const difficulties = {
     width: 9,
     height: 9,
     mines: 10,
-  }
+  },
+  Medium: {
+    width: 16,
+    height: 16,
+    mines: 40,
+  },
+  Hard: {
+    width: 16,
+    height: 30,
+    mines: 99,
+  },
 }
 
 const gameStates = {
@@ -23,7 +34,7 @@ class App extends Component {
 
   state = {
     gameState: gameStates.UNSTARTED,
-    difficulty: 'Easy', // TODO - implement different difficulties later
+    difficulty: '',
     flaggedBombs: 0,
     flagsPlanted: 0,
     gameOver: false,
@@ -32,14 +43,14 @@ class App extends Component {
 
   start = () => {
     this.setState({ gameState: gameStates.ACTIVE })
-    let board = this.buildBoard(difficulties[this.state.difficulty])
-    this.setState({ board })
   }
 
-  /*
+
   selectDifficulty = difficulty => {
     this.setState({ difficulty })
-  }*/
+    let board = this.buildBoard(difficulties[difficulty])
+    this.setState({ board })
+  }
 
   buildBoard = settings => {
     let board = []
@@ -170,21 +181,20 @@ class App extends Component {
   }
 
   render() {
-    let bombCounter =
-      difficulties[this.state.difficulty].mines - this.state.flagsPlanted;
     return (
       <div className="App">
         {this.state.gameState === gameStates.UNSTARTED &&
           <TitlePage start={this.start} /> }
-        {/*!this.state.started &&
-          <selectDifficulty select={this.selectDifficulty }/>*/}
-        {this.state.gameState !== gameStates.UNSTARTED &&
+        {!this.state.difficulty &&
+          <SettingsPage selectDifficulty={this.selectDifficulty} />}
+        {this.state.difficulty &&
           <Board
+            totalMines={difficulties[this.state.difficulty].mines}
+            flagsPlanted={this.state.flagsPlanted}
             gameState={this.state.gameState}
             difficulty={this.state.difficulty}
             board={this.state.board}
             mode={this.state.mode}
-            bombCounter={bombCounter}
             resetGame={this.start}
             toggleMode={this.toggleMode}
             click={this.clickCell}

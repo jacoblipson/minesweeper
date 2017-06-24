@@ -1,0 +1,17 @@
+.settings {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.settings-header {
+  padding: 20px;
+  color: white;
+}
+
+.settings-button {
+  width: 120px;
+  height: 100px;
+}
