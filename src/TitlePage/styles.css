@@ -1,0 +1,28 @@
+.title {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title-header {
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.title-logo {
+  animation: title-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+@keyframes title-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+button {
+  width: 120px;
+  height: 40px;
+}
