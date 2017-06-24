@@ -1,3 +1,7 @@
+.board {
+  padding: 80px;
+}
+
 .cells {
   display: flex;
   flex-direction: column;
@@ -16,10 +20,31 @@
   justify-content: center;
   width: 30px;
   height: 30px;
-  color: blue;
-  font-weight: 600;
   background-color: gray;
   border: 3px outset gray;
+}
+
+.flagged-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: '#666666';
+  border: 3px outset gray;
+  cursor: pointer;
+}
+
+.neighbors-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: blue;
+  font-weight: 600;
+  border: 3px inset gray;
+  background-color: '#989898';
 }
 
 .bomb-cell {
@@ -45,4 +70,22 @@
 .cell-img {
   width: 25px;
   height: 25px;
+}
+
+.status {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  padding: 20px;
+  width: 50%;
+  margin-left: 25%;
+}
+
+.difficulty {
+}
+
+.counter {
+  font-weight: 800;
 }

@@ -5,7 +5,7 @@ import './styles.css';
 
 export default class BombCell extends Component {
   render() {
-    let css = this.props.bombState !== 'explosion'
+    let css = this.props.bombState === 'explosion'
       ? 'exploded-cell' : 'bomb-cell';
     return (
       <div className={css}>

@@ -13,11 +13,29 @@ export default class Row extends Component {
           {this.props.row.map((cell, index) =>
             <div key={index}>
               {(cell.revealed && cell.bomb) &&
-                <BombCell bombState={cell.bomb} />}
+                <BombCell
+                  x={this.props.x} y={index}
+                  bombState={cell.bomb}
+                />
+              }
               {(cell.revealed && !cell.bomb) &&
-                <NeighborsCell count={cell.neighbors} />}
-              {(!cell.revealed && !cell.marked) && <FlaggedCell />}
-              {(!cell.revealed && cell.marked) && <BlankCell />}
+                <NeighborsCell
+                  x={this.props.x} y={index}
+                  count={cell.neighbors}
+                />
+              }
+              {(!cell.revealed && cell.marked) &&
+                <FlaggedCell
+                  x={this.props.x} y={index}
+                  click={this.props.click}
+                />
+              }
+              {(!cell.revealed && !cell.marked) &&
+                <BlankCell
+                  x={this.props.x} y={index}
+                  click={this.props.click}
+                />
+              }
             </div>
           )}
         </div>

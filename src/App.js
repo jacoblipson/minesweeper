@@ -5,22 +5,33 @@ import TitlePage from './TitlePage';
 import Board from './Board';
 
 const difficulties = {
-  easy: {
+  Easy: {
     width: 9,
     height: 9,
     mines: 10,
   }
 }
 
+const gameStates = {
+  UNSTARTED: 0,
+  ACTIVE: 1,
+  WON: 2,
+  LOST: 3,
+}
+
 class App extends Component {
 
   state = {
-    started: false,
-    difficulty: 'easy', //implement different difficulties later
+    gameState: gameStates.UNSTARTED,
+    difficulty: 'Easy', // TODO - implement different difficulties later
+    flaggedBombs: 0,
+    flagsPlanted: 0,
+    gameOver: false,
+    mode: 'click',
   }
 
   start = () => {
-    this.setState({ started: true })
+    this.setState({ gameState: gameStates.ACTIVE })
     let board = this.buildBoard(difficulties[this.state.difficulty])
     this.setState({ board })
   }
@@ -68,8 +79,10 @@ class App extends Component {
 
   updateNeighbors = (board, x, y, width, height) => {
     // find the neighbors of the cell (within the bounds of the board)
-    for (let i = -1; i < 2 && -1 < x+i && x+i < width; i++) {
-      for (let j= -1; j < 2 && -1 < y+j && y+j < height; j++) {
+    for (let i = -1; i < 2; i++) {
+      if (x+i < 0 || x+i >= width) continue;
+      for (let j= -1; j < 2; j++) {
+        if (y+j < 0 || y+j >= height) continue;
         // do not update the position of the bomb aka (x+0, y+0) aka (x, y)
         if (i !== 0 || j !== 0) {
           board[x+i][y+j].neighbors++;
@@ -79,13 +92,104 @@ class App extends Component {
     return board;
   }
 
+  toggleMode = () => {
+    if (this.state.mode === 'flag') {
+      this.setState({ mode: 'click' })
+    } else {
+      this.setState({ mode: 'flag' })
+    }
+  }
+
+  clickCell = (x, y) => {
+    if (this.state.gameState !== gameStates.ACTIVE) return;
+    let board = this.state.board;
+    if (this.state.mode === 'flag') {
+      this.flagCell(board, x, y)
+    } else if (this.state.board[x][y].bomb) {
+      board[x][y].bomb = 'explosion';
+      this.setState({ board, gameState: gameStates.LOST })
+      this.revealBombs(board);
+    } else {
+      board = this.revealCell(board, x, y);
+      this.setState({ board })
+    }
+  }
+
+  flagCell = (board, x, y) => {
+    // mark the cell accordingly & adjust display/win counters
+    if (board[x][y].marked) {
+      board[x][y].marked = false;
+      this.setState({
+        board,
+        flagsPlanted: this.state.flagsPlanted - 1,
+        flaggedBombs: this.state.flaggedBombs - board[x][y].bomb ? 1 : 0,
+      })
+    } else {
+      board[x][y].marked = true;
+      let flaggedBombs = this.state.flaggedBombs + (board[x][y].bomb ? 1 : 0)
+      this.setState({
+        board,
+        flagsPlanted: this.state.flagsPlanted + 1,
+        flaggedBombs: flaggedBombs,
+        gameState: flaggedBombs === difficulties[this.state.difficulty].mines
+          ? gameStates.WON : gameStates.ACTIVE,
+      })
+    }
+  }
+
+  revealCell = (board, x, y) => {
+    board[x][y].revealed = true;
+    if (board[x][y].marked) {
+      this.setState({ flagsPlanted: this.state.flagsPlanted - 1 })
+    }
+    // if we have no neighbors with bombs, mark all those cells as revealed
+    if (board[x][y].neighbors === 0) {
+      for (let i = -1; i < 2; i++) {
+        if (x+i < 0 || x+i >= board.length) continue;
+        for (let j= -1; j < 2; j++) {
+          if (y+j < 0 || y+j >= board[x].length) continue;
+          if (board[x+i][y+j].revealed) continue;
+          // recurse s.t. adjacent cells with 0 bomb neighbors are also revealed
+          this.revealCell(board, x+i, y+j);
+        }
+      }
+    }
+    return board;
+  }
+
+  revealBombs = board => {
+    // now that our game is over, if there is a bomb, let's see it
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        if (board[i][j].bomb) {
+          board[i][j].revealed = true;
+        }
+      }
+    }
+    this.setState({ board })
+  }
+
   render() {
+    let bombCounter =
+      difficulties[this.state.difficulty].mines - this.state.flagsPlanted;
     return (
       <div className="App">
-        {!this.state.started && <TitlePage start={this.start} /> }
+        {this.state.gameState === gameStates.UNSTARTED &&
+          <TitlePage start={this.start} /> }
         {/*!this.state.started &&
           <selectDifficulty select={this.selectDifficulty }/>*/}
-        {this.state.started && <Board board={this.state.board} />}
+        {this.state.gameState !== gameStates.UNSTARTED &&
+          <Board
+            gameState={this.state.gameState}
+            difficulty={this.state.difficulty}
+            board={this.state.board}
+            mode={this.state.mode}
+            bombCounter={bombCounter}
+            resetGame={this.start}
+            toggleMode={this.toggleMode}
+            click={this.clickCell}
+          />
+        }
       </div>
     );
   }
