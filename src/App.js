@@ -30,19 +30,27 @@ const gameStates = {
   LOST: 3,
 }
 
+const initState = {
+  difficulty: '',
+  flaggedBombs: 0,
+  flagsPlanted: 0,
+  gameOver: false,
+  mode: 'click',
+}
+
+
 class App extends Component {
 
   state = {
     gameState: gameStates.UNSTARTED,
-    difficulty: '',
-    flaggedBombs: 0,
-    flagsPlanted: 0,
-    gameOver: false,
-    mode: 'click',
+    ...initState,
   }
 
   start = () => {
-    this.setState({ gameState: gameStates.ACTIVE })
+    this.setState({
+      gameState: gameStates.ACTIVE,
+      ...initState,
+    })
   }
 
 

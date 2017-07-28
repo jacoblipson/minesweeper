@@ -35,7 +35,7 @@ I chose to solve this problem in ReactJS because I haven't used a GUI
 for Java to date and wanted to work quickly. However, a major tradeoff of choosing
 to work with ReactJS is performance. While there are many useful ways of managing web application state,
 the time required to build that layer is enough to make a difference in the short window of time I had.
-As a result, this game does not run as quickly as it could, nor does it handle state safely in all cases.
+As a result, this game does not run as quickly as it could.
 In addition, were we to play an enormous game of Minesweeper, we would strain the memory of the browser.
 This is because revealing adjacent cells for cells with no neighboring mines uses recursion.
 
@@ -48,5 +48,4 @@ about how many flags have been placed and how many mines are on the game board.
 
 
 ### Known Issues
-* Occasionally, the flag image file does not render correctly. However, the background color changes to indicate that the tile has been marked safely, and the flag counter will update, so functionality is not impaired.
 * Selecting a medium or large grid causes a padding issue.

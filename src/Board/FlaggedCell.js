@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import flag from '../assets/flag.ico';
+import flag from '../assets/flag.png';
 import './styles.css';
 
 export default class FlaggedCell extends Component {
